@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <title>Ata üçün Terminal Təbrik</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-color: black;
+      color: #00FF00;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .terminal-box {
+      width: 80%;
+      max-width: 700px;
+      background-color: #111;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+      min-height: 200px;
+    }
+
+    #terminal {
+      white-space: pre-wrap;
+      font-size: 18px;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      background-color: #00FF00;
+      animation: blink 0.8s steps(1) infinite;
+      margin-left: 2px;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    #heart-box {
+      display: none;
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #111;
+      border: 2px solid red;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+      max-width: 600px;
+      color: red;
+      font-size: 22px;
+      text-align: center;
+      line-height: 1.5;
+      position: relative;
+      animation: fadeIn 2s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    #heart-icon {
+      font-size: 32px;
+      animation: pulse 1.5s infinite;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.7; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="terminal-box">
+    <div id="terminal"></div><span class="cursor"></span>
+  </div>
+
+  <div id="heart-box">
+    <span id="heart-icon">❤️</span>
+    <span id="heart-text"></span>
+  </div>
+
+  <script>
+    const code = `
+def birthday_message():
+    heart = "❤️ Ad günün mübarək olsun, dede. 100 yaşa ❤️"
+    return heart
+`;
+
+    const terminal = document.getElementById("terminal");
+    const heartBox = document.getElementById("heart-box");
+    const heartText = document.getElementById("heart-text");
+    let i = 0;
+
+    function typeCode() {
+      if (i < code.length) {
+        terminal.textContent += code.charAt(i);
+        i++;
+        setTimeout(typeCode, 50);
+      } else {
+        document.querySelector(".cursor").style.display = "none";
+        setTimeout(() => {
+          heartBox.style.display = "block";
+          typeHeartMessage("Ad günün mübarək olsun, dede. 100 yaşa ❤️");
+        }, 800);
+      }
+    }
+
+    function typeHeartMessage(message) {
+      let j = 0;
+      function typeChar() {
+        if (j < message.length) {
+          heartText.textContent += message.charAt(j);
+          j++;
+          setTimeout(typeChar, 60);
+        }
+      }
+      typeChar();
+    }
+
+    typeCode();
+  </script>
+
+</body>
+</html>
